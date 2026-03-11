@@ -34,10 +34,10 @@ const Navbar = () => {
               />
             </div>
             <div className="hidden md:block">
-              <h2 className="text-lg font-bold text-primary-text leading-tight">
+              <h2 className="text-xl font-bold text-primary-text leading-tight">
                 RV College of<br></br> Engineering
               </h2>
-              <p className="text-xs text-gray-600"></p>
+              <p className="text-sm text-gray-600"></p>
             </div>
           </Link>
 
@@ -47,7 +47,7 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`text-sm font-medium transition-colors duration-200 hover:text-gray-600 ${
+                className={`text-base font-medium transition-colors duration-200 hover:text-gray-600 ${
                   pathname === link.href
                     ? 'text-primary-text font-semibold'
                     : 'text-gray-700'
