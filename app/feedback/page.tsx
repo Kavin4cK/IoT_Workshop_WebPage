@@ -1,6 +1,6 @@
 export default function FeedbackPage() {
   // Placeholder link - will be replaced with actual Google Form link later
-  const feedbackFormLink = 'https://forms.google.com/example-feedback-form';
+  const feedbackFormLink = 'https://forms.gle/Pz1qPkGTkNU8aCqt5';
 
   return (
     <div className="min-h-screen bg-primary-bg flex items-center justify-center">
@@ -9,7 +9,7 @@ export default function FeedbackPage() {
         <h1 className="text-4xl font-bold text-primary-text mb-6">
           Workshop Feedback
         </h1>
-        <p className="text-lg text-secondary-text mb-8 leading-relaxed">
+        <p className="text-lg text-gray-700 mb-8 leading-relaxed">
           We value your feedback. Please share your experience by filling out the feedback form.
         </p>
 
@@ -18,13 +18,13 @@ export default function FeedbackPage() {
           href={feedbackFormLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block bg-accent-green text-primary-text px-8 py-4 rounded-lg font-semibold text-lg hover:bg-secondary-text hover:text-white transition-colors shadow-md hover:shadow-lg"
+          className="inline-block bg-primary-text text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-800 transition-colors shadow-md hover:shadow-lg"
         >
           Submit Feedback
         </a>
 
         {/* Optional Note */}
-        <p className="text-sm text-secondary-text mt-6 italic">
+        <p className="text-sm text-gray-500 mt-6 italic">
           You will be redirected to a Google Form
         </p>
       </div>

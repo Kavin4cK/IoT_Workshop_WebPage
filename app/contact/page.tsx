@@ -1,11 +1,27 @@
 export default function ContactPage() {
-  const professor = {
-    name: 'Prof. Savithri Kulkarni',
-    designation: 'Assistant Professor',
-    department: 'Computer Science & Engineering',
-    institution: 'RV College of Engineering',
-    location: 'Bengaluru',
-  };
+  const professors = [
+    {
+      name: 'Dr. K Badari Nath',
+      designation: 'Associate Professor',
+      department: 'Computer Science & Engineering',
+      institution: 'RV College of Engineering',
+      location: 'Bengaluru',
+    },
+    {
+      name: 'Dr. Srividya M S',
+      designation: 'Associate Professor',
+      department: 'Computer Science & Engineering',
+      institution: 'RV College of Engineering',
+      location: 'Bengaluru',
+    },
+    {
+      name: 'Prof. Savithri Kulkarni',
+      designation: 'Assistant Professor',
+      department: 'Computer Science & Engineering',
+      institution: 'RV College of Engineering',
+      location: 'Bengaluru',
+    },
+  ];
 
   const students = [
     {
@@ -13,21 +29,21 @@ export default function ContactPage() {
       department: 'Computer Science & Engineering',
       institution: 'RV College of Engineering',
       location: 'Bengaluru',
-      linkedin: 'https://linkedin.com/in/example-profile-1',
+      linkedin: 'https://www.linkedin.com/in/kavin-krishnan-c-72024k/?originalSubdomain=in',
     },
     {
       name: 'Chinmai Kiran Shetti',
       department: 'Computer Science & Engineering',
       institution: 'RV College of Engineering',
       location: 'Bengaluru',
-      linkedin: 'https://linkedin.com/in/example-profile-2',
+      linkedin: 'https://www.linkedin.com/in/chinmai-shetti/?originalSubdomain=in',
     },
     {
       name: 'Krupanka R',
       department: 'Computer Science & Engineering',
       institution: 'RV College of Engineering',
       location: 'Bengaluru',
-      linkedin: 'https://linkedin.com/in/example-profile-3',
+      linkedin: 'https://www.linkedin.com/in/krupanka-r-3476752b8/?originalSubdomain=in',
     },
   ];
 
@@ -39,47 +55,52 @@ export default function ContactPage() {
           <h1 className="text-4xl font-bold text-primary-text text-center">
             Contact Us
           </h1>
-          <p className="text-lg text-secondary-text text-center mt-4">
+          <p className="text-lg text-gray-700 text-center mt-4">
             Workshop organizers and coordinators
           </p>
         </div>
       </section>
 
-      {/* Professor Section - Row 1 */}
+      {/* Professors Section - Row 1 */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-2xl font-bold text-primary-text mb-8 text-center">
-            Faculty Coordinator
+            Faculty Coordinators
           </h2>
-          <div className="flex justify-center">
-            <div className="w-full max-w-md bg-secondary-bg border border-border-color rounded-lg shadow-md p-8">
-              <div className="text-center">
-                <h3 className="text-2xl font-bold text-primary-text mb-3">
-                  {professor.name}
-                </h3>
-                <div className="space-y-2 text-secondary-text">
-                  <p className="text-sm font-semibold text-primary-text">
-                    {professor.designation}
-                  </p>
-                  <p className="text-sm">{professor.department}</p>
-                  <p className="text-sm">{professor.institution}</p>
-                  <p className="text-sm flex items-center justify-center gap-1">
-                    <svg
-                      className="w-4 h-4"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    {professor.location}
-                  </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {professors.map((professor, index) => (
+              <div
+                key={index}
+                className="bg-white border border-border-color rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow duration-200"
+              >
+                <div className="text-center">
+                  <h3 className="text-xl font-bold text-primary-text mb-3">
+                    {professor.name}
+                  </h3>
+                  <div className="space-y-2 text-gray-700">
+                    <p className="text-sm font-semibold text-primary-text">
+                      {professor.designation}
+                    </p>
+                    <p className="text-sm">{professor.department}</p>
+                    <p className="text-sm">{professor.institution}</p>
+                    <p className="text-sm flex items-center justify-center gap-1">
+                      <svg
+                        className="w-4 h-4"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      {professor.location}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -94,13 +115,13 @@ export default function ContactPage() {
             {students.map((student, index) => (
               <div
                 key={index}
-                className="bg-secondary-bg border border-border-color rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200"
+                className="bg-white border border-border-color rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200"
               >
                 <div className="text-center">
                   <h3 className="text-xl font-bold text-primary-text mb-3">
                     {student.name}
                   </h3>
-                  <div className="space-y-2 text-secondary-text mb-4">
+                  <div className="space-y-2 text-gray-700 mb-4">
                     <p className="text-sm">{student.department}</p>
                     <p className="text-sm">{student.institution}</p>
                     <p className="text-sm flex items-center justify-center gap-1">
@@ -124,7 +145,7 @@ export default function ContactPage() {
                     href={student.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-accent-green text-primary-text px-4 py-2 rounded text-sm font-medium hover:bg-secondary-text hover:text-white transition-colors"
+                    className="inline-flex items-center gap-2 bg-primary-text text-white px-4 py-2 rounded text-sm font-medium hover:bg-gray-800 transition-colors"
                   >
                     <svg
                       className="w-5 h-5"

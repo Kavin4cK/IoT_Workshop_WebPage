@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function ModulesPage() {
   const hardwareComponents = [
     {
@@ -68,11 +70,6 @@ export default function ModulesPage() {
       description: 'Integrated development environment for programming microcontrollers and embedded systems.',
       logo: 'ARD',
     },
-    {
-      name: 'MicroPython',
-      description: 'Python implementation optimized for microcontrollers and embedded hardware platforms.',
-      logo: 'µPY',
-    },
   ];
 
   return (
@@ -83,7 +80,7 @@ export default function ModulesPage() {
           <h1 className="text-4xl font-bold text-primary-text text-center">
             Workshop Modules
           </h1>
-          <p className="text-lg text-secondary-text text-center mt-4">
+          <p className="text-lg text-gray-700 text-center mt-4">
             Hardware components and software technologies covered in this workshop
           </p>
         </div>
@@ -99,20 +96,86 @@ export default function ModulesPage() {
             {hardwareComponents.map((component, index) => (
               <div
                 key={index}
-                className="bg-secondary-bg border border-border-color rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200"
+                className="bg-white border border-border-color rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200"
               >
                 {/* Image Placeholder */}
                 <div className="h-48 bg-secondary-bg flex items-center justify-center border-b border-border-color">
-                  <span className="text-4xl font-bold text-secondary-text">
-                    {component.image}
-                  </span>
+                  {component.image === 'RPI4' ? (
+                    <Image
+                      src="/RSP4.png"
+                      alt={component.name}
+                      width={200}
+                      height={200}
+                      className="object-contain w-full h-full p-4"
+                    />
+                  ) : component.image === 'DHT11' ? (
+                    <Image
+                      src="/DHT11-Sensor.jpg"
+                      alt={component.name}
+                      width={200}
+                      height={200}
+                      className="object-contain w-full h-full p-4"
+                    />
+                  ) : component.image === 'MQ-2' ? (
+                    <Image
+                      src="/MQ-2-Gas-Sensor.jpg"
+                      alt={component.name}
+                      width={200}
+                      height={200}
+                      className="object-contain w-full h-full p-4"
+                    />
+                  ) : component.image === 'LED' ? (
+                    <Image
+                      src="/LED-Indicator.webp"
+                      alt={component.name}
+                      width={200}
+                      height={200}
+                      className="object-contain w-full h-full p-4"
+                    />
+                  ) : component.image === 'BUZZER' ? (
+                    <Image
+                      src="/Buzzer.png"
+                      alt={component.name}
+                      width={200}
+                      height={200}
+                      className="object-contain w-full h-full p-4"
+                    />
+                  ) : component.image === 'BOARD' ? (
+                    <Image
+                      src="/Breadboard.jpg"
+                      alt={component.name}
+                      width={200}
+                      height={200}
+                      className="object-contain w-full h-full p-4"
+                    />
+                  ) : component.image === 'WIRES' ? (
+                    <Image
+                      src="/Jumper-Wires.jpg"
+                      alt={component.name}
+                      width={200}
+                      height={200}
+                      className="object-contain w-full h-full p-4"
+                    />
+                  ) : component.image === 'ESP32' ? (
+                    <Image
+                      src="/ESP32.jpg"
+                      alt={component.name}
+                      width={200}
+                      height={200}
+                      className="object-contain w-full h-full p-4"
+                    />
+                  ) : (
+                    <span className="text-4xl font-bold text-gray-400">
+                      {component.image}
+                    </span>
+                  )}
                 </div>
                 {/* Content */}
                 <div className="p-5">
                   <h3 className="text-lg font-semibold text-primary-text mb-2">
                     {component.name}
                   </h3>
-                  <p className="text-sm text-secondary-text leading-relaxed">
+                  <p className="text-sm text-gray-600 leading-relaxed">
                     {component.description}
                   </p>
                 </div>
@@ -132,20 +195,62 @@ export default function ModulesPage() {
             {technologies.map((tech, index) => (
               <div
                 key={index}
-                className="bg-secondary-bg border border-border-color rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200"
+                className="bg-white border border-border-color rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200"
               >
                 {/* Logo Placeholder */}
-                <div className="h-40 bg-gradient-to-br from-primary-bg to-secondary-bg flex items-center justify-center border-b border-border-color">
-                  <span className="text-5xl font-bold text-secondary-text">
-                    {tech.logo}
-                  </span>
+                <div className="h-40 bg-gradient-to-br from-gray-50 to-secondary-bg flex items-center justify-center border-b border-border-color">
+                  {tech.logo === 'PY' ? (
+                    <Image
+                      src="/Python-3.png"
+                      alt={tech.name}
+                      width={150}
+                      height={150}
+                      className="object-contain w-full h-full p-4"
+                    />
+                  ) : tech.logo === 'FB' ? (
+                    <Image
+                      src="/Firebase-Realtime-Database.png"
+                      alt={tech.name}
+                      width={150}
+                      height={150}
+                      className="object-contain w-full h-full p-4"
+                    />
+                  ) : tech.logo === 'MIT' ? (
+                    <Image
+                      src="/MIT-App-Inventor.png"
+                      alt={tech.name}
+                      width={150}
+                      height={150}
+                      className="object-contain w-full h-full p-4"
+                    />
+                  ) : tech.logo === 'ST' ? (
+                    <Image
+                      src="/Streamlit.webp"
+                      alt={tech.name}
+                      width={150}
+                      height={150}
+                      className="object-contain w-full h-full p-4"
+                    />
+                  ) : tech.logo === 'ARD' ? (
+                    <Image
+                      src="/Arduino-IDE.png"
+                      alt={tech.name}
+                      width={150}
+                      height={150}
+                      className="object-contain w-full h-full p-4"
+                    />
+                  ) : (
+                    <span className="text-5xl font-bold text-gray-400">
+                      {tech.logo}
+                    </span>
+                  )}
                 </div>
                 {/* Content */}
                 <div className="p-5">
                   <h3 className="text-lg font-semibold text-primary-text mb-2">
                     {tech.name}
                   </h3>
-                  <p className="text-sm text-secondary-text leading-relaxed">
+                  <p className="text-sm text-gray-600 leading-relaxed">
                     {tech.description}
                   </p>
                 </div>

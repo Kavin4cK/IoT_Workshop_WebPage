@@ -79,7 +79,7 @@ export default function CodebaseLinksPage() {
           <h1 className="text-4xl font-bold text-primary-text text-center">
             Codebase & Resources
           </h1>
-          <p className="text-lg text-secondary-text text-center mt-4">
+          <p className="text-lg text-gray-700 text-center mt-4">
             Access workshop code repositories and documentation
           </p>
         </div>
@@ -95,19 +95,19 @@ export default function CodebaseLinksPage() {
             {githubRepositories.map((repo, index) => (
               <div
                 key={index}
-                className="bg-secondary-bg border border-border-color rounded-lg p-6 hover:shadow-lg transition-shadow duration-200"
+                className="bg-white border border-border-color rounded-lg p-6 hover:shadow-lg transition-shadow duration-200"
               >
                 <h3 className="text-lg font-semibold text-primary-text mb-2">
                   {repo.name}
                 </h3>
-                <p className="text-sm text-secondary-text mb-4">
+                <p className="text-sm text-gray-600 mb-4">
                   {repo.description}
                 </p>
                 <a
                   href={repo.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-accent-green text-primary-text px-4 py-2 rounded text-sm font-medium hover:bg-secondary-text hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 bg-primary-text text-white px-4 py-2 rounded text-sm font-medium hover:bg-gray-800 transition-colors"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
@@ -131,19 +131,19 @@ export default function CodebaseLinksPage() {
             {pythonScripts.map((script, index) => (
               <div
                 key={index}
-                className="bg-secondary-bg border border-border-color rounded-lg p-6 hover:shadow-lg transition-shadow duration-200"
+                className="bg-white border border-border-color rounded-lg p-6 hover:shadow-lg transition-shadow duration-200"
               >
                 <h3 className="text-lg font-semibold text-primary-text mb-2">
                   {script.name}
                 </h3>
-                <p className="text-sm text-secondary-text mb-4">
+                <p className="text-sm text-gray-600 mb-4">
                   {script.description}
                 </p>
                 <a
                   href={script.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-accent-green text-primary-text px-4 py-2 rounded text-sm font-medium hover:bg-secondary-text hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 bg-primary-text text-white px-4 py-2 rounded text-sm font-medium hover:bg-gray-800 transition-colors"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
@@ -167,19 +167,19 @@ export default function CodebaseLinksPage() {
             {mobileDashboard.map((resource, index) => (
               <div
                 key={index}
-                className="bg-secondary-bg border border-border-color rounded-lg p-6 hover:shadow-lg transition-shadow duration-200"
+                className="bg-white border border-border-color rounded-lg p-6 hover:shadow-lg transition-shadow duration-200"
               >
                 <h3 className="text-lg font-semibold text-primary-text mb-2">
                   {resource.name}
                 </h3>
-                <p className="text-sm text-secondary-text mb-4">
+                <p className="text-sm text-gray-600 mb-4">
                   {resource.description}
                 </p>
                 <a
                   href={resource.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-accent-green text-primary-text px-4 py-2 rounded text-sm font-medium hover:bg-secondary-text hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 bg-primary-text text-white px-4 py-2 rounded text-sm font-medium hover:bg-gray-800 transition-colors"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
@@ -203,19 +203,19 @@ export default function CodebaseLinksPage() {
             {hardwareDocs.map((doc, index) => (
               <div
                 key={index}
-                className="bg-secondary-bg border border-border-color rounded-lg p-6 hover:shadow-lg transition-shadow duration-200"
+                className="bg-white border border-border-color rounded-lg p-6 hover:shadow-lg transition-shadow duration-200"
               >
                 <h3 className="text-lg font-semibold text-primary-text mb-2">
                   {doc.name}
                 </h3>
-                <p className="text-sm text-secondary-text mb-4">
+                <p className="text-sm text-gray-600 mb-4">
                   {doc.description}
                 </p>
                 <a
                   href={doc.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-accent-green text-primary-text px-4 py-2 rounded text-sm font-medium hover:bg-secondary-text hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 bg-primary-text text-white px-4 py-2 rounded text-sm font-medium hover:bg-gray-800 transition-colors"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />

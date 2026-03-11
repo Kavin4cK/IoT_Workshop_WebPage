@@ -53,7 +53,7 @@ export default function OutcomesPage() {
           <h1 className="text-4xl font-bold text-primary-text text-center">
             Learning Outcomes
           </h1>
-          <p className="text-lg text-secondary-text text-center mt-4">
+          <p className="text-lg text-gray-700 text-center mt-4">
             Objectives and expected outcomes from the workshop
           </p>
         </div>
@@ -69,17 +69,17 @@ export default function OutcomesPage() {
             {learningObjectives.map((objective, index) => (
               <div
                 key={index}
-                className="bg-secondary-bg border border-border-color rounded-lg p-6 hover:shadow-lg transition-shadow duration-200"
+                className="bg-white border border-border-color rounded-lg p-6 hover:shadow-lg transition-shadow duration-200"
               >
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 bg-accent-green text-primary-text rounded-full flex items-center justify-center font-bold">
+                  <div className="flex-shrink-0 w-10 h-10 bg-primary-text text-white rounded-full flex items-center justify-center font-bold">
                     {index + 1}
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-primary-text mb-2">
                       {objective.title}
                     </h3>
-                    <p className="text-sm text-secondary-text leading-relaxed">
+                    <p className="text-sm text-gray-600 leading-relaxed">
                       {objective.description}
                     </p>
                   </div>
@@ -100,12 +100,12 @@ export default function OutcomesPage() {
             {expectedOutcomes.map((outcome, index) => (
               <div
                 key={index}
-                className="bg-secondary-bg border border-border-color rounded-lg p-6 hover:shadow-md transition-shadow duration-200"
+                className="bg-white border border-border-color rounded-lg p-6 hover:shadow-md transition-shadow duration-200"
               >
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0">
                     <svg
-                      className="w-6 h-6 text-accent-green"
+                      className="w-6 h-6 text-primary-text"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -120,7 +120,7 @@ export default function OutcomesPage() {
                     <h3 className="text-lg font-semibold text-primary-text mb-2">
                       {outcome.title}
                     </h3>
-                    <p className="text-sm text-secondary-text leading-relaxed">
+                    <p className="text-sm text-gray-600 leading-relaxed">
                       {outcome.description}
                     </p>
                   </div>
