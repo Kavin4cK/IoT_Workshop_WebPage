@@ -1,6 +1,6 @@
-# Academic Website
+# IoT Workshop WebPage
 
-A modern professional academic website built with Next.js and Tailwind CSS.
+A modern professional academic website built with Next.js and Tailwind CSS for Raspberry Pi Based Industrial IoT Systems Workshop.
 
 ## Getting Started
 
@@ -9,10 +9,6 @@ A modern professional academic website built with Next.js and Tailwind CSS.
 ```bash
 npm install
 ```
-
-### Add Your Logo
-
-Place your logo image in the `/public` folder as `Logo.png` (recommended size: 48x48px or higher).
 
 ### Run Development Server
 
@@ -33,24 +29,24 @@ npm start
 
 ```
 /app
-  /home - Home page
-  /modules - Modules page
-  /agenda - Agenda page
-  /outcomes - Outcomes page
-  /codebase-links - Codebase Links page
-  /feedback - Feedback page
-  /contact - Contact page
+  /home - Home page with hero section and workshop overview
+  /modules - Hardware components and software technologies
+  /agenda - Workshop schedule and timeline
+  /outcomes - Learning objectives and expected outcomes
+  /codebase-links - GitHub repository links
+  /feedback - Feedback form page
+  /contact - Faculty and student coordinators
   layout.tsx - Root layout with Navbar
   page.tsx - Root page (redirects to /home)
 
 /components
-  Navbar.tsx - Navigation component
+  Navbar.tsx - Navigation component with college logo
 
 /public
-  Logo.png - Your logo (add this file)
+  - College logos and component images
 
 /styles
-  globals.css - Global styles
+  globals.css - Global styles with Inter font
 ```
 
 ## Design Theme
@@ -61,6 +57,10 @@ npm start
 - **Borders**: Soft grey (#E5E5E5)
 - **Font**: Inter (modern sans-serif)
 
-## Next Steps
+## Features
 
-Add content to the individual pages as needed. All pages are currently empty placeholders ready for your content.
+- Fully responsive design for mobile, tablet, and desktop
+- Professional academic styling
+- Hardware component showcase with images
+- Interactive workshop agenda timeline
+- Faculty and student coordinator profiles
