@@ -14,6 +14,7 @@ const Navbar = () => {
     { name: 'Modules', href: '/modules' },
     { name: 'Agenda', href: '/agenda' },
     { name: 'Outcomes', href: '/outcomes' },
+    { name: 'Procedure', href: '/procedure' },
     { name: 'Codebase Links', href: '/codebase-links' },
     { name: 'Feedback', href: '/feedback' },
     { name: 'Contact', href: '/contact' },

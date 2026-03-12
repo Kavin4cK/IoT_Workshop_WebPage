@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RPi Sensor Circuit Diagram</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --grid: #0d1526;
+    --panel: #0f1829;
+    --border: #1a2d4a;
+    --accent: #00d4ff;
+    --green: #00ff88;
+    --orange: #ff6b35;
+    --yellow: #ffd700;
+    --red: #ff3d5a;
+    --purple: #b44dff;
+    --text: #c8dff0;
+    --dim: #4a6080;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 4px 16px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(22px, 4vw, 38px);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    color: var(--dim);
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+
+  /* Main circuit card */
+  .circuit-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 32px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .circuit-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+
+  .section-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* SVG Circuit */
+  .svg-wrap {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  svg {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  /* Wiring tables */
+  .wiring-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 640px) {
+    .wiring-grid { grid-template-columns: 1fr; }
+  }
+
+  .wiring-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .wiring-header {
+    padding: 12px 16px;
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .wiring-header.ds { background: rgba(0,255,136,0.08); color: var(--green); border-bottom: 1px solid rgba(0,255,136,0.2); }
+  .wiring-header.mq { background: rgba(255,107,53,0.08); color: var(--orange); border-bottom: 1px solid rgba(255,107,53,0.2); }
+
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot.green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .dot.orange { background: var(--orange); box-shadow: 0 0 6px var(--orange); }
+
+  table { width: 100%; border-collapse: collapse; }
+
+  td {
+    padding: 10px 16px;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(26,45,74,0.6);
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  td:first-child { color: var(--dim); width: 30%; }
+  td:nth-child(2) { color: #fff; font-weight: bold; }
+  td:last-child { text-align: right; font-size: 11px; }
+
+  .wire-red    { color: var(--red); }
+  .wire-black  { color: #888; }
+  .wire-yellow { color: var(--yellow); }
+  .wire-blue   { color: var(--accent); }
+  .wire-green  { color: var(--green); }
+  .wire-orange { color: var(--orange); }
+
+  /* Steps */
+  .steps-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 32px;
+    margin-bottom: 32px;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step {
+    display: flex;
+    gap: 20px;
+    position: relative;
+  }
+
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 32px;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-body {
+    padding-bottom: 28px;
+    flex: 1;
+  }
+
+  .step-title {
+    color: #fff;
+    font-size: 13px;
+    margin-bottom: 6px;
+    padding-top: 6px;
+  }
+
+  .step-desc {
+    color: var(--dim);
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  code {
+    background: rgba(0,212,255,0.08);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 11px;
+  }
+
+  /* Pulse animation on active wires */
+  @keyframes pulse-wire {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  .live-wire { animation: pulse-wire 2s ease-in-out infinite; }
+
+  /* Note box */
+  .note {
+    background: rgba(255,215,0,0.05);
+    border: 1px solid rgba(255,215,0,0.2);
+    border-left: 3px solid var(--yellow);
+    padding: 14px 18px;
+    border-radius: 0 4px 4px 0;
+    font-size: 12px;
+    color: var(--yellow);
+    margin-top: 24px;
+    line-height: 1.7;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--dim);
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="badge">Lab Reference · v1.0</div>
+    <h1>RPi 4B <span>Sensor</span> Circuit</h1>
+    <p class="subtitle">DS18B20 Temperature · MQ2 Gas Detection · Firebase IoT</p>
+  </header>
+
+  <!-- CIRCUIT DIAGRAM SVG -->
+  <div class="circuit-card">
+    <div class="section-label">CIRCUIT DIAGRAM</div>
+    <div class="svg-wrap">
+      <svg width="900" height="520" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow-blue">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-green">
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-orange">
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <marker id="arrow-red" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#ff3d5a"/>
+          </marker>
+        </defs>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- RASPBERRY PI 4B                            -->
+        <!-- ═══════════════════════════════════════════ -->
+        <g id="rpi">
+          <!-- Board body -->
+          <rect x="30" y="80" width="200" height="360" rx="8" fill="#0f1829" stroke="#1a3a5c" stroke-width="2"/>
+          <rect x="30" y="80" width="200" height="360" rx="8" fill="none" stroke="#00d4ff" stroke-width="1" opacity="0.3"/>
+
+          <!-- Board label -->
+          <text x="130" y="108" text-anchor="middle" font-family="Orbitron,monospace" font-size="11" fill="#00d4ff" letter-spacing="1">RASPBERRY PI 4B</text>
+          <text x="130" y="124" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="9" fill="#4a6080">GPIO HEADER (BCM)</text>
+
+          <!-- GPIO Pin rows -->
+          <!-- Left column pins (odd: 1,3,5...) -->
+          <!-- Right column pins (even: 2,4,6...) -->
+
+          <!-- Pin definitions: [label, y, color, highlight] -->
+          <!-- We draw 13 rows of 2 pins each -->
+
+          <!-- Row labels on left -->
+          <text x="50" y="152" font-family="Share Tech Mono,monospace" font-size="9" fill="#4a6080" text-anchor="middle">P1</text>
+          <text x="50" y="172" font-family="Share Tech Mono,monospace" font-size="9" fill="#4a6080" text-anchor="middle">P3</text>
+          <text x="50" y="192" font-family="Share Tech Mono,monospace" font-size="9" fill="#4a6080" text-anchor="middle">P5</text>
+          <text x="50" y="212" font-family="Share Tech Mono,monospace" font-size="9" fill="#ff3d5a" text-anchor="middle" font-weight="bold">P6</text>
+          <text x="50" y="232" font-family="Share Tech Mono,monospace" font-size="9" fill="#ffd700" text-anchor="middle" font-weight="bold">P7</text>
+          <text x="50" y="252" font-family="Share Tech Mono,monospace" font-size="9" fill="#4a6080" text-anchor="middle">P9</text>
+          <text x="50" y="272" font-family="Share Tech Mono,monospace" font-size="9" fill="#4a6080" text-anchor="middle">P11</text>
+
+          <!-- Right column -->
+          <text x="210" y="152" font-family="Share Tech Mono,monospace" font-size="9" fill="#00ff88" text-anchor="middle" font-weight="bold">P1</text>
+          <text x="210" y="172" font-family="Share Tech Mono,monospace" font-size="9" fill="#ff6b35" text-anchor="middle" font-weight="bold">P2</text>
+          <text x="210" y="192" font-family="Share Tech Mono,monospace" font-size="9" fill="#ff6b35" text-anchor="middle" font-weight="bold">P4</text>
+          <text x="210" y="212" font-family="Share Tech Mono,monospace" font-size="9" fill="#4a6080" text-anchor="middle">P8</text>
+          <text x="210" y="232" font-family="Share Tech Mono,monospace" font-size="9" fill="#4a6080" text-anchor="middle">P10</text>
+
+          <!-- Pin dots - Left column -->
+          <circle cx="65" cy="148" r="5" fill="#1a2d4a" stroke="#00d4ff" stroke-width="1.5"/> <!-- P1 3.3V -->
+          <circle cx="65" cy="168" r="5" fill="#1a2d4a" stroke="#2a3d5a" stroke-width="1"/>
+          <circle cx="65" cy="188" r="5" fill="#1a2d4a" stroke="#2a3d5a" stroke-width="1"/>
+          <circle cx="65" cy="208" r="6" fill="#ff3d5a" stroke="#ff3d5a" stroke-width="1.5" filter="url(#glow-blue)"/> <!-- P6 GND -->
+          <circle cx="65" cy="228" r="6" fill="#ffd700" stroke="#ffd700" stroke-width="1.5"/> <!-- P7 GPIO4 -->
+          <circle cx="65" cy="248" r="5" fill="#1a2d4a" stroke="#2a3d5a" stroke-width="1"/>
+          <circle cx="65" cy="268" r="6" fill="#b44dff" stroke="#b44dff" stroke-width="1.5"/> <!-- P11 GPIO17 -->
+
+          <!-- Pin dots - Right column -->
+          <circle cx="195" cy="148" r="6" fill="#00ff88" stroke="#00ff88" stroke-width="1.5" filter="url(#glow-green)"/> <!-- P1 3.3V -->
+          <circle cx="195" cy="168" r="6" fill="#ff6b35" stroke="#ff6b35" stroke-width="1.5"/> <!-- P2 5V -->
+          <circle cx="195" cy="188" r="6" fill="#ff6b35" stroke="#ff6b35" stroke-width="1.5"/> <!-- P4 5V -->
+          <circle cx="195" cy="208" r="5" fill="#1a2d4a" stroke="#2a3d5a" stroke-width="1"/>
+          <circle cx="195" cy="228" r="5" fill="#1a2d4a" stroke="#2a3d5a" stroke-width="1"/>
+
+          <!-- Pin labels inside -->
+          <text x="80" y="151" font-family="Share Tech Mono,monospace" font-size="8" fill="#4a6080">3.3V</text>
+          <text x="80" y="211" font-family="Share Tech Mono,monospace" font-size="8" fill="#ff3d5a">GND</text>
+          <text x="80" y="231" font-family="Share Tech Mono,monospace" font-size="8" fill="#ffd700">GPIO4</text>
+          <text x="80" y="271" font-family="Share Tech Mono,monospace" font-size="8" fill="#b44dff">GPIO17</text>
+          <text x="175" y="151" font-family="Share Tech Mono,monospace" font-size="8" fill="#00ff88" text-anchor="end">3.3V</text>
+          <text x="175" y="171" font-family="Share Tech Mono,monospace" font-size="8" fill="#ff6b35" text-anchor="end">5V</text>
+          <text x="175" y="191" font-family="Share Tech Mono,monospace" font-size="8" fill="#ff6b35" text-anchor="end">5V</text>
+
+          <!-- GPIO pin number badges -->
+          <rect x="38" y="222" width="22" height="12" rx="2" fill="rgba(255,215,0,0.15)" stroke="#ffd700" stroke-width="0.5"/>
+          <text x="49" y="231" text-anchor="middle" font-family="Orbitron,monospace" font-size="7" fill="#ffd700">BCM4</text>
+
+          <rect x="38" y="262" width="22" height="12" rx="2" fill="rgba(180,77,255,0.15)" stroke="#b44dff" stroke-width="0.5"/>
+          <text x="49" y="271" text-anchor="middle" font-family="Orbitron,monospace" font-size="7" fill="#b44dff">BCM17</text>
+        </g>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- RESISTOR (4.7kΩ for DS18B20)               -->
+        <!-- ═══════════════════════════════════════════ -->
+        <g id="resistor">
+          <rect x="370" y="128" width="60" height="22" rx="4" fill="#1a2010" stroke="#ffd700" stroke-width="1.5"/>
+          <!-- Resistor bands -->
+          <rect x="382" y="128" width="4" height="22" fill="#ff6b35" opacity="0.8"/>
+          <rect x="390" y="128" width="4" height="22" fill="#b44dff" opacity="0.8"/>
+          <rect x="398" y="128" width="4" height="22" fill="#ffd700" opacity="0.8"/>
+          <rect x="406" y="128" width="4" height="22" fill="#aaa" opacity="0.8"/>
+          <text x="400" y="168" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="10" fill="#ffd700">4.7kΩ</text>
+          <text x="400" y="180" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="9" fill="#4a6080">PULL-UP</text>
+          <!-- Resistor leads -->
+          <line x1="340" y1="139" x2="370" y2="139" stroke="#ffd700" stroke-width="2"/>
+          <line x1="430" y1="139" x2="460" y2="139" stroke="#ffd700" stroke-width="2"/>
+        </g>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- DS18B20 SENSOR                             -->
+        <!-- ═══════════════════════════════════════════ -->
+        <g id="ds18b20">
+          <!-- Body -->
+          <rect x="540" y="100" width="90" height="130" rx="6" fill="#0a1520" stroke="#00ff88" stroke-width="2"/>
+          <rect x="540" y="100" width="90" height="130" rx="6" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.2"/>
+
+          <!-- Sensor face -->
+          <rect x="548" y="108" width="74" height="60" rx="3" fill="#0d1f10" stroke="#00ff88" stroke-width="1" opacity="0.5"/>
+          <text x="585" y="128" text-anchor="middle" font-family="Orbitron,monospace" font-size="9" fill="#00ff88" letter-spacing="1">DS18B20</text>
+          <text x="585" y="143" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8" fill="#4a6080">1-WIRE</text>
+          <text x="585" y="158" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8" fill="#4a6080">TEMP SENSOR</text>
+
+          <!-- Chip icon -->
+          <circle cx="585" cy="185" r="14" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.4"/>
+          <text x="585" y="190" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="16" fill="#00ff88" opacity="0.6">°C</text>
+
+          <!-- 3 pins at bottom -->
+          <line x1="560" y1="230" x2="560" y2="250" stroke="#888" stroke-width="3"/>
+          <line x1="585" y1="230" x2="585" y2="250" stroke="#ffd700" stroke-width="3"/>
+          <line x1="610" y1="230" x2="610" y2="250" stroke="#00ff88" stroke-width="3"/>
+
+          <!-- Pin labels -->
+          <text x="560" y="265" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="9" fill="#888">GND</text>
+          <text x="585" y="265" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="9" fill="#ffd700">DATA</text>
+          <text x="610" y="265" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="9" fill="#00ff88">VCC</text>
+
+          <!-- Pin numbers -->
+          <text x="560" y="278" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8" fill="#4a6080">PIN1</text>
+          <text x="585" y="278" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8" fill="#4a6080">PIN2</text>
+          <text x="610" y="278" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8" fill="#4a6080">PIN3</text>
+        </g>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- MQ2 SENSOR                                 -->
+        <!-- ═══════════════════════════════════════════ -->
+        <g id="mq2">
+          <!-- Board -->
+          <rect x="540" y="310" width="90" height="140" rx="6" fill="#0a1520" stroke="#ff6b35" stroke-width="2"/>
+
+          <!-- Sensor dome -->
+          <circle cx="585" cy="355" r="28" fill="#1a0a00" stroke="#ff6b35" stroke-width="2"/>
+          <circle cx="585" cy="355" r="20" fill="#2a1000" stroke="#ff6b35" stroke-width="1" opacity="0.5"/>
+          <circle cx="585" cy="355" r="10" fill="#ff6b35" opacity="0.2"/>
+          <!-- Dome holes pattern -->
+          <circle cx="578" cy="348" r="2" fill="none" stroke="#ff6b35" stroke-width="0.8" opacity="0.6"/>
+          <circle cx="585" cy="348" r="2" fill="none" stroke="#ff6b35" stroke-width="0.8" opacity="0.6"/>
+          <circle cx="592" cy="348" r="2" fill="none" stroke="#ff6b35" stroke-width="0.8" opacity="0.6"/>
+          <circle cx="578" cy="355" r="2" fill="none" stroke="#ff6b35" stroke-width="0.8" opacity="0.6"/>
+          <circle cx="592" cy="355" r="2" fill="none" stroke="#ff6b35" stroke-width="0.8" opacity="0.6"/>
+          <circle cx="578" cy="362" r="2" fill="none" stroke="#ff6b35" stroke-width="0.8" opacity="0.6"/>
+          <circle cx="585" cy="362" r="2" fill="none" stroke="#ff6b35" stroke-width="0.8" opacity="0.6"/>
+          <circle cx="592" cy="362" r="2" fill="none" stroke="#ff6b35" stroke-width="0.8" opacity="0.6"/>
+
+          <text x="585" y="398" text-anchor="middle" font-family="Orbitron,monospace" font-size="9" fill="#ff6b35" letter-spacing="1">MQ-2</text>
+          <text x="585" y="411" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8" fill="#4a6080">GAS SENSOR</text>
+
+          <!-- 4 pins at bottom -->
+          <line x1="556" y1="450" x2="556" y2="470" stroke="#00ff88" stroke-width="3"/>
+          <line x1="571" y1="450" x2="571" y2="470" stroke="#888" stroke-width="3"/>
+          <line x1="600" y1="450" x2="600" y2="470" stroke="#b44dff" stroke-width="3"/>
+          <line x1="615" y1="450" x2="615" y2="470" stroke="#ff6b35" stroke-width="3"/>
+
+          <!-- Pin labels -->
+          <text x="556" y="485" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="9" fill="#00ff88">VCC</text>
+          <text x="571" y="485" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="9" fill="#888">GND</text>
+          <text x="600" y="485" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="9" fill="#b44dff">DO</text>
+          <text x="615" y="485" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="9" fill="#4a6080">AO</text>
+          <text x="615" y="498" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8" fill="#ff3d5a">N/C</text>
+        </g>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- WIRES — DS18B20                            -->
+        <!-- ═══════════════════════════════════════════ -->
+
+        <!-- 3.3V: RPi P1(right) → DS18B20 VCC (Pin3) -->
+        <polyline points="195,148 460,148 460,105 610,105 610,250"
+          fill="none" stroke="#00ff88" stroke-width="2" stroke-dasharray="6,3" class="live-wire" opacity="0.8"/>
+
+        <!-- GND: RPi P6(left) → DS18B20 GND (Pin1) -->
+        <polyline points="65,208 40,208 40,290 520,290 520,258 560,258 560,250"
+          fill="none" stroke="#ff3d5a" stroke-width="2" opacity="0.8"/>
+
+        <!-- DATA: RPi GPIO4 (P7 left) → Resistor → DS18B20 DATA (Pin2) -->
+        <!-- GPIO4 out -->
+        <polyline points="65,228 40,228 40,310 320,310 320,139 340,139"
+          fill="none" stroke="#ffd700" stroke-width="2" opacity="0.9"/>
+        <!-- After resistor to DS18B20 DATA -->
+        <polyline points="460,139 520,139 520,258 585,258 585,250"
+          fill="none" stroke="#ffd700" stroke-width="2" opacity="0.9"/>
+
+        <!-- Resistor junction dot (VCC to resistor top) -->
+        <polyline points="460,148 460,139"
+          fill="none" stroke="#ffd700" stroke-width="2" opacity="0.7"/>
+        <!-- Junction dot -->
+        <circle cx="460" cy="148" r="4" fill="#ffd700"/>
+        <circle cx="460" cy="139" r="4" fill="#ffd700"/>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- WIRES — MQ2                                -->
+        <!-- ═══════════════════════════════════════════ -->
+
+        <!-- 5V: RPi P2(right) → MQ2 VCC -->
+        <polyline points="195,168 480,168 480,320 556,320 556,450"
+          fill="none" stroke="#ff6b35" stroke-width="2" stroke-dasharray="6,3" class="live-wire" opacity="0.8"/>
+
+        <!-- GND: RPi P6 shared → MQ2 GND -->
+        <polyline points="40,208 40,420 510,420 510,468 571,468 571,470"
+          fill="none" stroke="#ff3d5a" stroke-width="2" opacity="0.7"/>
+
+        <!-- DO: RPi GPIO17 (P11) → MQ2 DO -->
+        <polyline points="65,268 30,268 30,440 490,440 490,468 600,468 600,470"
+          fill="none" stroke="#b44dff" stroke-width="2" opacity="0.9"/>
+
+        <!-- Junction dot at GND split -->
+        <circle cx="40" cy="208" r="4" fill="#ff3d5a"/>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- LABELS / ANNOTATIONS                       -->
+        <!-- ═══════════════════════════════════════════ -->
+
+        <!-- Wire legend -->
+        <g transform="translate(680, 110)">
+          <rect x="0" y="0" width="180" height="160" rx="4" fill="#0f1829" stroke="#1a2d4a" stroke-width="1"/>
+          <text x="90" y="20" text-anchor="middle" font-family="Orbitron,monospace" font-size="9" fill="#00d4ff" letter-spacing="2">WIRE LEGEND</text>
+          <line x1="14" y1="38" x2="44" y2="38" stroke="#00ff88" stroke-width="2.5" stroke-dasharray="5,2"/>
+          <text x="52" y="42" font-family="Share Tech Mono,monospace" font-size="10" fill="#c8dff0">3.3V Power</text>
+          <line x1="14" y1="58" x2="44" y2="58" stroke="#ff6b35" stroke-width="2.5" stroke-dasharray="5,2"/>
+          <text x="52" y="62" font-family="Share Tech Mono,monospace" font-size="10" fill="#c8dff0">5V Power</text>
+          <line x1="14" y1="78" x2="44" y2="78" stroke="#ff3d5a" stroke-width="2.5"/>
+          <text x="52" y="82" font-family="Share Tech Mono,monospace" font-size="10" fill="#c8dff0">Ground</text>
+          <line x1="14" y1="98" x2="44" y2="98" stroke="#ffd700" stroke-width="2.5"/>
+          <text x="52" y="102" font-family="Share Tech Mono,monospace" font-size="10" fill="#c8dff0">Data / Signal</text>
+          <line x1="14" y1="118" x2="44" y2="118" stroke="#b44dff" stroke-width="2.5"/>
+          <text x="52" y="122" font-family="Share Tech Mono,monospace" font-size="10" fill="#c8dff0">Digital Out</text>
+          <rect x="14" y="132" width="30" height="14" rx="3" fill="#1a2010" stroke="#ffd700" stroke-width="1"/>
+          <text x="29" y="143" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8" fill="#ffd700">4.7k</text>
+          <text x="52" y="143" font-family="Share Tech Mono,monospace" font-size="10" fill="#c8dff0">Pull-up R</text>
+        </g>
+
+        <!-- Not connected label for AO -->
+        <text x="700" y="485" font-family="Share Tech Mono,monospace" font-size="10" fill="#ff3d5a">← AO pin: leave unconnected</text>
+
+      </svg>
+    </div>
+
+    <div class="note">
+      ⚠️ The 4.7kΩ resistor is REQUIRED for DS18B20. Connect it between the DATA pin and VCC (3.3V). Without it, the sensor will not be detected. MQ2 AO pin — do NOT connect, only use DO pin.
+    </div>
+  </div>
+
+  <!-- WIRING TABLES -->
+  <div class="wiring-grid">
+    <div class="wiring-card">
+      <div class="wiring-header ds"><div class="dot green"></div>DS18B20 — TEMPERATURE SENSOR</div>
+      <table>
+        <tr>
+          <td>PIN 1</td>
+          <td class="wire-black">GND</td>
+          <td class="wire-black">→ RPi Pin 6 (GND)</td>
+        </tr>
+        <tr>
+          <td>PIN 2</td>
+          <td class="wire-yellow">DATA</td>
+          <td class="wire-yellow">→ RPi Pin 7 (GPIO4)</td>
+        </tr>
+        <tr>
+          <td>PIN 3</td>
+          <td class="wire-green">VCC</td>
+          <td class="wire-green">→ RPi Pin 1 (3.3V)</td>
+        </tr>
+        <tr>
+          <td>RESISTOR</td>
+          <td class="wire-yellow">4.7kΩ</td>
+          <td style="color:#ffd700">DATA ↔ VCC</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="wiring-card">
+      <div class="wiring-header mq"><div class="dot orange"></div>MQ2 — GAS SENSOR</div>
+      <table>
+        <tr>
+          <td>VCC</td>
+          <td class="wire-orange">5V</td>
+          <td class="wire-orange">→ RPi Pin 2 (5V)</td>
+        </tr>
+        <tr>
+          <td>GND</td>
+          <td class="wire-black">GND</td>
+          <td class="wire-black">→ RPi Pin 6 (GND)</td>
+        </tr>
+        <tr>
+          <td>DO</td>
+          <td class="wire-blue">GPIO17</td>
+          <td class="wire-blue">→ RPi Pin 11 (GPIO17)</td>
+        </tr>
+        <tr>
+          <td>AO</td>
+          <td style="color:#ff3d5a">N/C</td>
+          <td style="color:#ff3d5a">← Do NOT connect</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- SETUP STEPS -->
+  <div class="steps-card">
+    <div class="section-label">SETUP PROCEDURE</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <div class="step-title">Enable 1-Wire Interface</div>
+          <div class="step-desc">Add <code>dtoverlay=w1-gpio,gpiopin=4</code> to <code>/boot/firmware/config.txt</code> then reboot. Required for DS18B20 communication.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <div class="step-title">Verify DS18B20 Detection</div>
+          <div class="step-desc">Run <code>ls /sys/bus/w1/devices/</code> — you should see a device starting with <code>28-</code> which is your sensor's unique ID.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <div class="step-title">Adjust MQ2 Sensitivity</div>
+          <div class="step-desc">Use a small screwdriver to turn the blue potentiometer on the MQ2 board. The onboard LED triggers when gas exceeds threshold. Set in clean air first.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <div class="step-title">Run the Logger</div>
+          <div class="step-desc">Execute <code>python main.py</code> from the project directory. Data overwrites Firebase every 2 seconds at the <code>/sensor_data</code> node.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>INDUSTRY REGULATORY SUBSYSTEM · RPi 4B IoT LAB · CIRCUIT REF v1.0</footer>
+
+</div>
+</body>
+</html>
